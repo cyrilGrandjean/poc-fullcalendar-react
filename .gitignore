@@ -7,6 +7,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# dependencies
+node_modules/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# environment variables
+.env
+.env.production
+!.env.sample
+
 node_modules
 dist
 dist-ssr
@@ -22,3 +37,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# jetbrains setting folder
+.idea/
