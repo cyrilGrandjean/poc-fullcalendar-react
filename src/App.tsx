@@ -46,6 +46,32 @@ function App() {
     const [unavailable, setUnavailable] = useState<Date[]>([]);
     const [subOptions, setSubOptions] = useState<Date[]>([]);
     const [eventInputList, setEventInputList] = useState<EventInput[]>([]);
+    const [shiftKeyPressed, setShiftKeyPressed] = useState<boolean>(false);
+    const [ctrlKeyPressed, setCtrlKeyPressed] = useState<boolean>(false);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            setShiftKeyPressed(event.shiftKey);
+            setCtrlKeyPressed(event.ctrlKey);
+        };
+
+        const handleKeyUp = (event: KeyboardEvent) => {
+            if (event.shiftKey !== shiftKeyPressed) {
+                setShiftKeyPressed(false);
+            }
+            if (event.ctrlKey !== ctrlKeyPressed) {
+                setCtrlKeyPressed(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
+        };
+    }, [shiftKeyPressed, ctrlKeyPressed]);
 
     useEffect(() => {
         setUnavailable([
@@ -94,6 +120,7 @@ function App() {
     }
 
     function handleSelectedDateChange(dateSelectArg: DateSelectArg) {
+        console.log(shiftKeyPressed, ctrlKeyPressed);
         const startDate = new Date(dateSelectArg.startStr);
         const endDate = new Date(dateSelectArg.endStr);
         const dateRange = getRangeDate(startDate, endDate)
