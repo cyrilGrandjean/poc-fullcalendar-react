@@ -51,10 +51,12 @@ function buildEventSelectedDate(date: Date): EventInput {
 }
 
 function buildEventReservedDate(title: string, startDate: Date, endDate: Date): EventInput {
+    const endDateForFullCalendar = new Date(endDate);
+    endDateForFullCalendar.setDate(endDateForFullCalendar.getDate() + 1);
     return {
         title: title,
         start: formatDateFullCalendar(startDate),
-        end: formatDateFullCalendar(endDate),
+        end: formatDateFullCalendar(endDateForFullCalendar),
     }
 }
 
@@ -201,7 +203,7 @@ export function CalendarProto2() {
 
 
     const eventTest: EventInput[] = [
-        buildEventReservedDate('Une event de plusieur jour', new Date('2025-03-02'), new Date('2025-03-14')),
+        buildEventReservedDate('Une event de plusieur jour', new Date('2025-03-02'), new Date('2025-03-06')),
         buildEventReservedDate('Une event', new Date('2025-03-20'), new Date('2025-03-20'))
     ]
 
