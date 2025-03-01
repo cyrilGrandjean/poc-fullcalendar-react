@@ -1,9 +1,19 @@
 import './App.css'
 import FullCalendar from '@fullcalendar/react';
-import {DateSelectArg, EventInput} from '@fullcalendar/core'
+import {DateSelectArg, DayCellContentArg, EventInput} from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {useEffect, useRef, useState} from 'react';
+import {createRoot} from 'react-dom/client';
+
+function formatPrice(price: number) {
+    return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(price);
+}
 
 function formatDateFullCalendar(date: Date) {
     return new Intl.DateTimeFormat('fr', {
@@ -45,6 +55,25 @@ function includeDate(dateList: Date[], date: Date): boolean {
     // console.log(dateSet)
     // console.log(date.toISOString())
     return dateSet.has(date.toISOString());
+}
+
+type DayGridDayFooterProps = {
+    buildingPrice: number | undefined;
+    meadowPrice: number | undefined;
+}
+
+function DayGridDayFooter({meadowPrice, buildingPrice}: DayGridDayFooterProps) {
+    return <>
+        {buildingPrice &&
+            <div className={'fc-daygrid-day-number'}>
+                {formatPrice(buildingPrice)}
+            </div>}
+        {meadowPrice &&
+            <div className={'fc-daygrid-day-number'}>
+                {formatPrice(meadowPrice)}
+            </div>}
+
+    </>;
 }
 
 
@@ -149,6 +178,19 @@ export function CalendarProto2() {
         }
     }
 
+    function handleDayCellDidMount(args: DayCellContentArg & { el: HTMLElement }) {
+        const dayGridDayFooter = document.createElement('div');
+        dayGridDayFooter.className = 'fc-daygrid-day-footer';
+        args.el.appendChild(dayGridDayFooter);
+
+        const root = createRoot(dayGridDayFooter);
+
+        const buildingPrice = Math.random() * 5;
+        const meadowPrice = Math.random() * 5;
+
+        root.render(<DayGridDayFooter buildingPrice={buildingPrice} meadowPrice={meadowPrice}/>);
+    }
+
     return (
         <>
             <div style={{width: '1000px'}}>
@@ -159,6 +201,7 @@ export function CalendarProto2() {
                     initialView='dayGridMonth'
                     events={eventInputList}
                     select={e => handleSelectedDateChange(e)}
+                    dayCellDidMount={args => handleDayCellDidMount(args)}
                 />
             </div>
         </>

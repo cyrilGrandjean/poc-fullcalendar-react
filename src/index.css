@@ -74,15 +74,21 @@ button:focus-visible {
 
 
 .unavailable {
-    background-color: #535bf2;
+    background-color: #ff5a6080;
 }
 
 
 .subOptions {
-    background-color: gold;
+    background-color: #faa32980;
 }
 
 
 .selected {
-    background-color: green;
+    background-color: #8ace5780;
+}
+
+.fc-daygrid-day-footer{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
