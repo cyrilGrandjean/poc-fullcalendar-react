@@ -72,10 +72,10 @@ type DayGridDayFooterProps = {
 
 function DayGridDayFooter({meadowPrice, buildingPrice}: DayGridDayFooterProps) {
     return <>
-        {buildingPrice &&
-            <div className={'fc-daygrid-day-number'}>
-                {formatPrice(buildingPrice)}
-            </div>}
+    {buildingPrice &&
+        <div className={'fc-daygrid-day-number'}>
+            {formatPrice(buildingPrice)}
+        </div>}
         {meadowPrice &&
             <div className={'fc-daygrid-day-number'}>
                 {formatPrice(meadowPrice)}
