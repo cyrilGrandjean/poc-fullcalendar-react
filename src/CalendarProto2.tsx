@@ -50,6 +50,14 @@ function buildEventSelectedDate(date: Date): EventInput {
     }
 }
 
+function buildEventReservedDate(title: string, startDate: Date, endDate: Date): EventInput {
+    return {
+        title: title,
+        start: formatDateFullCalendar(startDate),
+        end: formatDateFullCalendar(endDate),
+    }
+}
+
 function includeDate(dateList: Date[], date: Date): boolean {
     const dateSet = new Set<string>(dateList.map(x => x.toISOString()));
     // console.log(dateSet)
@@ -191,6 +199,12 @@ export function CalendarProto2() {
         root.render(<DayGridDayFooter buildingPrice={buildingPrice} meadowPrice={meadowPrice}/>);
     }
 
+
+    const eventTest: EventInput[] = [
+        buildEventReservedDate('Une event de plusieur jour', new Date('2025-03-02'), new Date('2025-03-14')),
+        buildEventReservedDate('Une event', new Date('2025-03-20'), new Date('2025-03-20'))
+    ]
+
     return (
         <>
             <div style={{width: '1000px'}}>
@@ -199,7 +213,7 @@ export function CalendarProto2() {
                     selectable={true}
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView='dayGridMonth'
-                    events={eventInputList}
+                    events={[...eventInputList, ...eventTest]}
                     select={e => handleSelectedDateChange(e)}
                     dayCellDidMount={args => handleDayCellDidMount(args)}
                 />
