@@ -150,8 +150,7 @@ export function CalendarProto2() {
         const dateRange = getRangeDate(startDate, endDate)
 
         if (shiftKeyPressed) {
-            const test = getDifferentDates(selectedDate, dateRange)
-            setSelecetedDate(test);
+            setSelecetedDate(getDifferentDates(selectedDate, dateRange));
         } else {
             setSelecetedDate(dateRange);
         }
