@@ -4,7 +4,6 @@ import {DateSelectArg, DayCellContentArg, EventInput} from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {useEffect, useRef, useState} from 'react';
-import {createRoot} from 'react-dom/client';
 
 function formatPrice(price: number) {
     return new Intl.NumberFormat('fr-FR', {
@@ -58,32 +57,6 @@ function buildEventReservedDate(title: string, startDate: Date, endDate: Date): 
         start: formatDateFullCalendar(startDate),
         end: formatDateFullCalendar(endDateForFullCalendar),
     }
-}
-
-function includeDate(dateList: Date[], date: Date): boolean {
-    const dateSet = new Set<string>(dateList.map(x => x.toISOString()));
-    // console.log(dateSet)
-    // console.log(date.toISOString())
-    return dateSet.has(date.toISOString());
-}
-
-type DayGridDayFooterProps = {
-    buildingPrice: number | undefined;
-    meadowPrice: number | undefined;
-}
-
-function DayGridDayFooter({meadowPrice, buildingPrice}: DayGridDayFooterProps) {
-    return <>
-        {buildingPrice &&
-            <div className={'fc-daygrid-day-number'}>
-                {formatPrice(buildingPrice)}
-            </div>}
-        {meadowPrice &&
-            <div className={'fc-daygrid-day-number'}>
-                {formatPrice(meadowPrice)}
-            </div>}
-
-    </>;
 }
 
 
