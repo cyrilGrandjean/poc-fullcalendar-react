@@ -153,7 +153,7 @@ export function CalendarProto2() {
         if (shiftKeyPressed) {
             setSelecetedDate(getDifferentDates(selectedDate, dateRange));
         } else {
-            if (selectedDate.includes(startDate)) {
+            if (!getDifferentDates(selectedDate, dateRange).length) {
                 dateRange = []
             }
             setSelecetedDate(dateRange);
