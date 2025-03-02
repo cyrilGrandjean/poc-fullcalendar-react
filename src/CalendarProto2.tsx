@@ -125,10 +125,11 @@ export function CalendarProto2() {
 
     function getRangeDate(startDate: Date, endDate: Date): Date[] {
         const dates: Date[] = [];
+        const startDateClone = new Date(startDate);
 
-        while (startDate < endDate) {
-            dates.push(new Date(startDate)); // Format YYYY-MM-DD
-            startDate.setDate(startDate.getDate() + 1);
+        while (startDateClone < endDate) {
+            dates.push(new Date(startDateClone)); // Format YYYY-MM-DD
+            startDateClone.setDate(startDateClone.getDate() + 1);
         }
 
         return dates;
@@ -147,11 +148,14 @@ export function CalendarProto2() {
     function handleSelectedDateChange(dateSelectArg: DateSelectArg) {
         const startDate = new Date(dateSelectArg.startStr);
         const endDate = new Date(dateSelectArg.endStr);
-        const dateRange = getRangeDate(startDate, endDate)
+        let dateRange = getRangeDate(startDate, endDate)
 
         if (shiftKeyPressed) {
             setSelecetedDate(getDifferentDates(selectedDate, dateRange));
         } else {
+            if (selectedDate.includes(startDate)) {
+                dateRange = []
+            }
             setSelecetedDate(dateRange);
         }
         if (calendarRef.current) {
