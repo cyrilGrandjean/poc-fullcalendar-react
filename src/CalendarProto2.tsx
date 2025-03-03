@@ -170,17 +170,17 @@ export function CalendarProto2() {
 
         const dayGridDayFooter = document.createElement('div');
         dayGridDayFooter.className = 'fc-daygrid-day-footer';
-        if (buildingPrice) {
-            const buildingPriceElement = document.createElement('div');
-            buildingPriceElement.className = 'fc-daygrid-day-number';
-            buildingPriceElement.innerHTML = formatPrice(buildingPrice);
-            dayGridDayFooter.appendChild(buildingPriceElement);
-        }
         if (meadowPrice) {
             const meadowPriceElement = document.createElement('div');
             meadowPriceElement.className = 'fc-daygrid-day-number';
-            meadowPriceElement.innerHTML = formatPrice(meadowPrice);
+            meadowPriceElement.innerHTML = 'm' + formatPrice(meadowPrice);
             dayGridDayFooter.appendChild(meadowPriceElement);
+        }
+        if (buildingPrice) {
+            const buildingPriceElement = document.createElement('div');
+            buildingPriceElement.className = 'fc-daygrid-day-number';
+            buildingPriceElement.innerHTML = 'b' + formatPrice(buildingPrice);
+            dayGridDayFooter.appendChild(buildingPriceElement);
         }
 
         args.el.appendChild(dayGridDayFooter);
